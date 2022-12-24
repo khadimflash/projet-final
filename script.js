@@ -54,45 +54,6 @@ function quantityChange(event){
      button.addEventListener('click',addCartClicked);
  }
 
-//add cart to 
-function addCartClicked(event){
-    var button =event.target
-    var shopProducts =button.parentElement
-    var title= shopProducts.getElementsByClassName('product-title')[0].innerText;
-    var price= shopProducts.getElementsByClassName('price')[0].innerText;
-    var productImg= shopProducts.getElementsByClassName('product-img')[0].src;
-    addProductToCart(title,price,productImg);
-    updateTotal();
-}
-
-
-function addProductToCart(title,price,productImg){
-    var cartshopBox = document.createElement('div');
-    cartshopBox.classList.add('cart-box');
-    var cartItems = document.getElementsByClassName('cart-content')[0];
-    var cartItemsNames = cartItems.getElementsByClassName('cart-product-title')[0];
-    for(var i=0; i < cartItemsNames.length;i++){
-        if(cartItemsNames[i].innerText == title){
-            alert("you have already add this items to cart");
-            return;
-        }
-    }
-}
-
-var cartBoxContent=`
-            <img src="img/product2.jpg" alt="" class="cart-img">
-            <div class="detail-box">
-                <div class="cart-product-title">Earbuds</div>
-                <div class="cart-price">10000 FCFA</div>
-                <input type="number" value="1" class="cart-quantity">
-            </div>
-            <!--remove cart-->
-            <i class='bx bxs-trash-alt cart-remove' ></i>`;
-    cartshopBox.innerHTML = cartBoxContent;
-    cartItems.append(cartshopBox);
-    cartshopBox.getElementsByClassName('cart-remove')[0].addEventListener('click',removeCartItem);
-    cartshopBox.getElementsByClassName('cart-quantity')[0].addEventListener('change',quantityChange);
-
 
 function removeCartItem(event){
     var buttonClicked= event.target;
@@ -100,8 +61,38 @@ function removeCartItem(event){
     updateTotal();
 }
 
+//add cart to 
+function addCartClicked(event){
+    var button =event.target;
+    var shopProducts =button.parentElement;
+    var title= shopProducts.getElementsByClassName('product-title')[0].innerText;
+    var price= shopProducts.getElementsByClassName('price')[0].innerText;
+    var productImg= shopProducts.getElementsByClassName('product-img')[0].src;
+    addProductToCart(title,price,productImg);
+    updateTotal();
+}
+function addProductToCart(title,price,productImg){
+    var cartshopBox = document.createElement('div');
+    cartshopBox.classList.add('cart-box');
+    var cartItems = document.getElementsByClassName('cart-content')[0];
+    var cartItemsNames = cartItems.getElementsByClassName('cart-product-title')[0];
+    
 
+var cartBoxContent=`
+            <img src="${productImg}" alt="" class="cart-img">
+            <div class="detail-box">
+                <div class="cart-product-title">${title}</div>
+                <div class="cart-price">${price} FCFA</div>
+                <input type="number" value="1" class="cart-quantity">
+            </div>
+            <!--remove cart-->
+            <i class='bx bxs-trash-alt cart-remove' ></i>`;
 
+    cartshopBox.innerHTML = cartBoxContent;
+    cartItems.append(cartshopBox);
+    cartshopBox.getElementsByClassName('cart-remove')[0].addEventListener('click',removeCartItem);
+    cartshopBox.getElementsByClassName('cart-quantity')[0].addEventListener('change',quantityChange);
+}
 
 //update total
 function updateTotal(){
